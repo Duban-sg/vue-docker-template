@@ -38,37 +38,7 @@ npm run build
 npm run test:unit
 ```
 ## Configuring the Dockerfile
--	Dockerfile.
-```sh
-# Utiliza una imagen oficial de Node.js como imagen base
-FROM node:20-alpine
-
-
-RUN npm install -g http-server
-
-# Establece el directorio de trabajo en el contenedor
-WORKDIR /app
-
-# Copia package.json y package-lock.json al directorio de trabajo
-COPY package*.json ./
-
-
-# Instala las dependencias
-RUN npm install
-
-# Copia el resto del código de la aplicación
-COPY . .
-
-RUN npm run build
-
-# Expone el puerto donde se ejecuta la aplicación
-EXPOSE 8080
-
-# Define el comando para ejecutar la aplicación
-CMD [ "http-server", "dist" ]
-
-```
--	Dockerfile.prod
+-	Dockerfile
 ```sh
 # Utiliza una imagen oficial de Node.js como imagen base
 FROM node:20-alpine as build-stage
@@ -95,7 +65,7 @@ FROM nginx:1.13.12-alpine as production-stage
 
 COPY --from=build-stage /app/dist /usr/share/nginx/html
 
-# Expone el puerto donde se ejecuta la aplicación
+# Expone el puerto donde se ejecuta la aplicación 
 EXPOSE 80
 
 # Define el comando para ejecutar la aplicación
