@@ -71,6 +71,6 @@ docker build --build-arg VUE_APP_APP_NAME=prueba_js -t  vue_js .
 ```
 -2. Run the Docker container:
 ```sh
-docker run 8080:8080 vue_js
+docker run -d -p 8080:8080 vue_js
 ```
 --The app be available on http://localhost:8080.--
