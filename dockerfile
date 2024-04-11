@@ -8,6 +8,9 @@ RUN npm install
 
 COPY . .
 
+ARG VUE_APP_APP_NAME 
+ENV VUE_APP_APP_NAME $VUE_APP_APP_NAME
+
 RUN npm run build
 
 # etapa de producción
