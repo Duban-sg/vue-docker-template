@@ -40,43 +40,34 @@ npm run test:unit
 ## Configuring the Dockerfile
 -	Dockerfile
 ```sh
-# Utiliza una imagen oficial de Node.js como imagen base
 FROM node:20-alpine as build-stage
 
-# Establece el directorio de trabajo en el contenedor
 WORKDIR /app
 
-# Copia package.json y package-lock.json al directorio de trabajo
 COPY package*.json ./
 
-
-# Instala las dependencias
 RUN npm install
 
-
-# Copia el resto del código de la aplicación
 COPY . .
+
+ARG VUE_APP_APP_NAME 
+ENV VUE_APP_APP_NAME $VUE_APP_APP_NAME
 
 RUN npm run build
 
 # etapa de producción
-# Utiliza una imagen oficial de nginx
 FROM nginx:1.13.12-alpine as production-stage
 
 COPY --from=build-stage /app/dist /usr/share/nginx/html
 
-# Expone el puerto donde se ejecuta la aplicación 
 EXPOSE 80
-
-# Define el comando para ejecutar la aplicación
 CMD ["nginx", "-g", "daemon off;"]
-
 
 ```
 ## Distribution using Docker
 -1. Build the Docker Image:
 ```sh
-docker build -t  vue_js .
+docker build --build-arg VUE_APP_APP_NAME=prueba_js -t  vue_js .
 ```
 -2. Run the Docker container:
 ```sh
